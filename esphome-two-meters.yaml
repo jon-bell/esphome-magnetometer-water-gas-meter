@@ -1,26 +1,24 @@
 ---
 substitutions:
   device_class1: 'water'
-  device_class2: 'gas'
+  device_class2: 'water'
 
   device_icon1: 'mdi:water'
-  device_icon2: 'mdi:meter-gas'
+  device_icon2: 'mdi:water'
 
   volume_unit1: 'gal'
-  volume_unit2: 'ft³'
+  volume_unit2: 'gal'
 
   prefix1_name: 'Water '
   prefix1_id: 'water_'
-  prefix2_name: 'Gas '
-  prefix2_id: 'gas_'
+  prefix2_name: 'Irrigation Water '
+  prefix2_id: 'irrigation_'
 
-  i2c1_sda: GPIO4
-  i2c1_scl: GPIO5
-  i2c2_sda: GPIO12
-  i2c2_scl: GPIO14
+  i2c1_bus: 'i2c_bus1'
+  i2c2_bus: 'i2c_bus2'
 
   flow_update_interval_seconds1: '10'
-  flow_update_interval_seconds2: '30'
+  flow_update_interval_seconds2: '10'
 
 packages:
   meter1: !include
@@ -31,8 +29,7 @@ packages:
       volume_unit: ${volume_unit1}
       prefix_name: ${prefix1_name}
       prefix_id: ${prefix1_id}
-      i2c_sda: ${i2c1_sda}
-      i2c_scl: ${i2c1_scl}
+      i2c_bus: ${i2c1_id}
       flow_update_interval_seconds: ${flow_update_interval_seconds1}
   meter2: !include
     file: esphome-magnetometer.yaml
@@ -42,14 +39,13 @@ packages:
       volume_unit: ${volume_unit2}
       prefix_name: ${prefix2_name}
       prefix_id: ${prefix2_id}
-      i2c_sda: ${i2c2_sda}
-      i2c_scl: ${i2c2_scl}
+      i2c_bus: ${i2c2_id}
       flow_update_interval_seconds: ${flow_update_interval_seconds2}
 
-switch:
-  # LED flashes faster/slower as magnet rotates on water meter
-  - platform: gpio
-    id: led
-    pin:
-      number: GPIO2
-      inverted: true
+# switch:
+#   # LED flashes faster/slower as magnet rotates on water meter
+#   - platform: gpio
+#     id: led
+#     pin:
+#       number: GPIO2
+#       inverted: true
